@@ -30,8 +30,12 @@ def register(request):
                 template_name="blog/register.html",
                 context={"form": form})
 
+
+
 def home(request):
-    return render(request=request, template_name="blog/home.html")
+    posts = Post.objects.filter(is_publish=True)
+    context = {"posts": posts}
+    return render(request=request, template_name="blog/home.html", context=context)
 
 @login_required
 def create_post(request):

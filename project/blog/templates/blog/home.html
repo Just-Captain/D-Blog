@@ -10,6 +10,16 @@
     {% if user.is_authenticated %}
         {{ user.username }}
     {% endif %}
+
+    {% for post in posts %}
+        <p style="color: cadetblue;">{{ post.title }}</p>
+        <p>{{ post.content }}</p>
+        <p>{{ post.create_at }}</p>
+        <p style="color: coral;">{{ post.author }}</p>
+        <br>
+        <hr>
+    {% endfor %}
+
     <a href="{% url 'login' %}">LOGIN</a>
     <a href="{% url 'logout' %}">Выйти</a>
 </body>
