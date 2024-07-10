@@ -56,6 +56,7 @@ def create_post(request):
 
 def user_login(request):
     if request.method == "POST":
+        print(request.POST)
         form = UserLoginForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get("username")
@@ -74,3 +75,22 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect("home")
+
+@login_required
+def get_posts_user(request):
+    user = request.user
+    posts = Post.objects.filter(author=user)
+    return render(request=request, template_name="blog/profile.html", context={"posts": posts})
+
+@login_required
+def edit_post_user(request, pk):
+    post = Post.objects.filter(id=pk).filter(author=request.user).first()
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+        return redirect('profile')
+    elif request.method == "GET":
+         form = PostForm(instance=post)
+
+    return render(request, 'blog/edit_post.html', {'form': form, 'post': post})
