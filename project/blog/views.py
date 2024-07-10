@@ -50,7 +50,7 @@ def create_post(request):
         form = PostForm()
     return render(
                 request=request,
-                template_name="blog/post_form.html",
+                template_name="blog/create_post.html",
                 context={"form": form}
                 )
 

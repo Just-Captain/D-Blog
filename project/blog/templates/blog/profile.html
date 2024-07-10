@@ -1,21 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
 
-    {% for post in posts %}
-        <p>{{ post.title }}</p>
-        <p>{{ post.content }}</p>
-        <p>{{ post.create_at }}</p>
-        <p>{{ post.update_at }}</p>
-        <p>{{ post.is_publish }}</p>
-        <button><a href="{% url 'edit_post' pk=post.id %}">Edit</a></button>
-        <hr>
+
+    {% extends 'blog/base.html' %}
+
+
+    {% block content %}
+        <button type="button" class="btn btn-outline-info"><a href="{% url 'create_post' %}">Написать пост</a></button>
+        {% for post in posts %}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Заголовок: {{ post.title }}</h5>
+    <p class="card-text">Контент: {{ post.content }}</p>
+      <p class="card-text">Дата создания: {{ post.create_at }}</p>
+      <p class="card-text">Последняя дата изменений: {{ post.update_at }}</p>
+      <p class="card-text">Опубликованно: {{ post.is_publish }}</p>
+      <button type="button" class="btn btn-outline-primary"><a href="{% url 'edit_post' pk=post.id %}">Изменить</a></button>
+
+  </div>
+</div>
     {% endfor %}
 
-</body>
-</html>
+
+    {%  endblock %}
